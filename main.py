@@ -18,18 +18,25 @@ def reachable(graph, start_node):
     frontier = set([start_node])
     while len(frontier) != 0:
         ###TODO
-        pass
+        n = frontier.pop()
+        result.add(n)
+        for i in graph[n]: # only want to visit once so if already in frontier list, don't add
+            if i not in result:
+                frontier.add(i)
     return result
-
-
 
 
 
 def connected(graph):
     ### TODO
-    pass
-
-
+    n = len(graph)
+    # reachable should return every node if it is a connected graph
+    # so the length of what reachable returns should be the length of the graph
+    r = len(reachable(graph, list(graph.keys())[0]))
+    if n == r:
+        return True
+    else:
+        return False
 
 
 def n_components(graph):
@@ -38,5 +45,13 @@ def n_components(graph):
       the number of connected components in an undirected graph
     """
     ### TODO
-    pass
+    r = []
+    frontier = set(list(graph.keys())) # all the nodes in the graph
+    while len(frontier) != 0:
+        n = frontier.pop()
+        reach = reachable(graph, n)
+        frontier = frontier - reach
+        r.append(reach)
 
+
+    return len(r)
